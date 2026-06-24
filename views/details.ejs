@@ -1,0 +1,81 @@
+<% layout("/layout/boilerplate") %>
+<%- include("includes/navbar.ejs") %>
+
+
+<body class="details">
+<div class="show-page">
+
+    <div class="show-container">
+
+        <!-- Image Section -->
+        <div class="image-section">
+            <img 
+                src="<%= listing.image %>" 
+                alt="Hotel Image"
+                class="hotel-image"
+            >
+
+            <div class="image-overlay">
+                <h1><%= listing.title %></h1>
+                <p>Luxury • Comfort • Experience ✨</p>
+            </div>
+        </div>
+
+        <!-- Details Section -->
+        <div class="details-section">
+
+            <div class="detail-card">
+
+                <div class="price-box">
+                    <span>Starting Price</span>
+                    <h2>₹ <%= listing.price.toLocaleString("en-IN") %></h2>
+                </div>
+
+                <div class="info-grid">
+
+                    <div class="info-item">
+                        <h4>Description</h4>
+                        <p><%= listing.discription %></p>
+                    </div>
+
+                    <div class="info-item">
+                        <h4>Location</h4>
+                        <p><%= listing.location %></p>
+                    </div>
+
+                    <div class="info-item">
+                        <h4>Country</h4>
+                        <p><%= listing.country %></p>
+                    </div>
+
+                </div>
+
+                <!-- Buttons -->
+                <div class="action-buttons">
+
+                    <a 
+                        href="/lists/<%= listing._id %>/edit"
+                        class="edit-btn"
+                    >
+                        Edit ✏️
+                    </a>
+
+                    <form 
+                        method="POST"
+                        action="/lists/<%= listing._id %>?_method=DELETE"
+                    >
+                        <button class="delete-btn">
+                            Delete 🗑️
+                        </button>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+</body>

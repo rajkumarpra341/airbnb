@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-md bg-body-tertiary border-bottom sticky-top">
+  <div class="container-fluid">
+    <!-- Logo/Brand -->
+    <a class="navbar-brand" href="/lists">
+        <i class="fa-solid fa-compass" style="color: #fe424d; font-size: 1.5rem;"></i> 
+        <span style="font-weight: 600; margin-left: 5px;">Airbnb</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/lists">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/lists/new">Add Hotal</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#about-section">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#footer-info">Contact</a>
+        </li>
+      </ul>
+
+      <!-- Search Form: Title Search -->
+      <form class="d-flex" role="search" action="/lists" method="GET">
+        <input class="form-control me-2 search-input" type="search" name="search" placeholder="Search by hotal name ..." aria-label="Search">
+        <button class="btn btn-search" type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i> Search
+        </button>
+      </form>
+    </div>
+  </div>
+</nav>

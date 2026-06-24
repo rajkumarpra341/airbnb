@@ -1,0 +1,85 @@
+<% layout("/layout/boilerplate") %>
+
+<!-- <link rel="stylesheet" href="/css/new.css"> -->
+ 
+<body class="new">
+<div class="new-page">
+
+    <div class="luxury-card">
+
+        <div class="heading-section">
+            <h1>Add New Hotel</h1>
+            <p>Create beautiful stays for travelers 🌍</p>
+        </div>
+
+        <form method="post" action="/lists" class="hotel-form">
+
+            <div class="input-field">
+                <input 
+                    type="text"
+                    name="title"
+                    required
+                >
+                <label>Hotel Title</label>
+            </div>
+
+            <div class="input-field textarea-field">
+                <textarea 
+                    name="discription"
+                    rows="5"
+                    required
+                ></textarea>
+
+                <label>Description</label>
+            </div>
+
+            <div class="input-field">
+                <input 
+                    type="text"
+                    name="image"
+                    required
+                >
+                <label>Image URL</label>
+            </div>
+
+            <div class="row-input">
+
+                <div class="input-field">
+                    <input 
+                        type="number"
+                        name="price"
+                        required
+                    >
+                    <label>Price</label>
+                </div>
+
+                <div class="input-field">
+                    <input 
+                        type="text"
+                        name="location"
+                        required
+                    >
+                    <label>Location</label>
+                </div>
+
+            </div>
+
+            <div class="input-field">
+                <input 
+                    type="text"
+                    name="country"
+                    required
+                >
+                <label>Country</label>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Add Hotel ✨
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+</body>

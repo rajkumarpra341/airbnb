@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+.edit{
+    min-height: 100vh;
+    background: linear-gradient(135deg, #141e30, #243b55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 15px;
+}
+
+.edit-page{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.glass-card{
+    width: 100%;
+    max-width: 650px;
+    padding: 35px;
+    border-radius: 25px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+    color: white;
+    animation: fadeIn 0.8s ease;
+}
+
+.top-section{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.top-section h1{
+    font-size: 38px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.top-section p{
+    color: #dcdcdc;
+    font-size: 15px;
+}
+
+.hotel-info{
+    background: rgba(255,255,255,0.08);
+    padding: 15px 20px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    border-left: 4px solid #00f7ff;
+}
+
+.hotel-info span{
+    font-size: 13px;
+    color: #cfcfcf;
+}
+
+.hotel-info h2{
+    margin-top: 5px;
+    font-size: 24px;
+    color: #fff;
+}
+
+.edit-form{
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.input-box{
+    position: relative;
+}
+
+.input-box input,
+.input-box textarea{
+    width: 100%;
+    padding: 16px 18px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 15px;
+    outline: none;
+    color: white;
+    font-size: 15px;
+    transition: 0.3s ease;
+}
+
+.input-box textarea{
+    resize: none;
+}
+
+.input-box label{
+    position: absolute;
+    top: 15px;
+    left: 18px;
+    color: #cfcfcf;
+    pointer-events: none;
+    transition: 0.3s ease;
+    background: transparent;
+}
+
+.input-box input:focus,
+.input-box textarea:focus{
+    border-color: #00f7ff;
+    box-shadow: 0 0 15px rgba(0,247,255,0.4);
+}
+
+.input-box input:focus ~ label,
+.input-box textarea:focus ~ label,
+.input-box input:valid ~ label,
+.input-box textarea:valid ~ label{
+    top: -10px;
+    left: 14px;
+    font-size: 12px;
+    background: #243b55;
+    padding: 2px 8px;
+    border-radius: 10px;
+    color: #00f7ff;
+}
+
+.double-input{
+    display: flex;
+    gap: 20px;
+}
+
+.double-input .input-box{
+    width: 100%;
+}
+
+.update-btn{
+    padding: 16px;
+    border: none;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #00f7ff, #0066ff);
+    color: white;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.4s ease;
+    letter-spacing: 0.5px;
+}
+
+.update-btn:hover{
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0,247,255,0.35);
+}
+
+@keyframes fadeIn{
+    from{
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media(max-width: 700px){
+
+    .glass-card{
+        padding: 25px;
+    }
+
+    .top-section h1{
+        font-size: 30px;
+    }
+
+    .double-input{
+        flex-direction: column;
+    }
+}

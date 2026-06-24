@@ -1,0 +1,99 @@
+<% layout("/layout/boilerplate") %>
+
+<!-- <link rel="stylesheet" href="/css/edit.css"> -->
+
+<body class="edit">
+<div class="edit-page">
+
+    <div class="glass-card">
+
+        <div class="top-section">
+            <h1>Edit Your Stay</h1>
+            <p>Update your hotel details beautifully ✨</p>
+        </div>
+
+        <div class="hotel-info">
+            <span>Currently Editing :</span>
+            <h2><%= listing.title %></h2>
+        </div>
+
+        <form 
+            method="post" 
+            action="/lists/<%= listing._id %>?_method=PUT"
+            class="edit-form"
+        >
+
+            <div class="input-box">
+                <input 
+                    type="text"
+                    name="title"
+                    value="<%= listing.title %>"
+                    required
+                >
+                <label>Hotel Title</label>
+            </div>
+
+            <div class="input-box textarea-box">
+                <textarea 
+                    name="discription"
+                    rows="5"
+                    required
+                ><%= listing.discription %></textarea>
+
+                <label>Description</label>
+            </div>
+
+            <div class="input-box">
+                <input 
+                    type="text"
+                    name="image"
+                    value="<%= listing.image %>"
+                    required
+                >
+                <label>Image URL</label>
+            </div>
+
+            <div class="double-input">
+
+                <div class="input-box">
+                    <input 
+                        type="number"
+                        name="price"
+                        value="<%= listing.price %>"
+                        required
+                    >
+                    <label>Price</label>
+                </div>
+
+                <div class="input-box">
+                    <input 
+                        type="text"
+                        name="location"
+                        value="<%= listing.location %>"
+                        required
+                    >
+                    <label>Location</label>
+                </div>
+
+            </div>
+
+            <div class="input-box">
+                <input 
+                    type="text"
+                    name="country"
+                    value="<%= listing.country %>"
+                    required
+                >
+                <label>Country</label>
+            </div>
+
+            <button type="submit" class="update-btn">
+                Update Listing 🚀
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+</body>

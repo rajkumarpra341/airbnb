@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+.new{
+    min-height: 100vh;
+    background:
+        linear-gradient(rgba(10,10,10,0.5), rgba(10,10,10,0.5)),
+        url("https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070&auto=format&fit=crop");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 15px;
+}
+
+.new-page{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.luxury-card{
+    width: 100%;
+    max-width: 700px;
+    padding: 40px;
+    border-radius: 30px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    animation: cardFade 0.8s ease;
+}
+
+.heading-section{
+    text-align: center;
+    margin-bottom: 35px;
+    color: white;
+}
+
+.heading-section h1{
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.heading-section p{
+    color: #e0e0e0;
+    font-size: 15px;
+}
+
+.hotel-form{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.input-field{
+    position: relative;
+}
+
+.input-field input,
+.input-field textarea{
+    width: 100%;
+    padding: 17px 18px;
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.07);
+    color: white;
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s ease;
+}
+
+.input-field textarea{
+    resize: none;
+}
+
+.input-field label{
+    position: absolute;
+    top: 16px;
+    left: 18px;
+    color: #d8d8d8;
+    pointer-events: none;
+    transition: 0.3s ease;
+}
+
+.input-field input:focus,
+.input-field textarea:focus{
+    border-color: #ffb703;
+    box-shadow: 0 0 18px rgba(255,183,3,0.35);
+    background: rgba(255,255,255,0.1);
+}
+
+.input-field input:focus ~ label,
+.input-field textarea:focus ~ label,
+.input-field input:valid ~ label,
+.input-field textarea:valid ~ label{
+    top: -10px;
+    left: 14px;
+    background: #1f2937;
+    padding: 2px 10px;
+    font-size: 12px;
+    border-radius: 10px;
+    color: #ffb703;
+}
+
+.row-input{
+    display: flex;
+    gap: 20px;
+}
+
+.row-input .input-field{
+    width: 100%;
+}
+
+.submit-btn{
+    padding: 16px;
+    border: none;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #ffb703, #fb8500);
+    color: white;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.4s ease;
+    letter-spacing: 0.5px;
+    margin-top: 10px;
+}
+
+.submit-btn:hover{
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 25px rgba(251,133,0,0.35);
+}
+
+@keyframes cardFade{
+
+    from{
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media(max-width: 768px){
+
+    .luxury-card{
+        padding: 28px;
+    }
+
+    .heading-section h1{
+        font-size: 32px;
+    }
+
+    .row-input{
+        flex-direction: column;
+    }
+}

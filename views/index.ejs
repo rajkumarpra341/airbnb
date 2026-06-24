@@ -1,0 +1,116 @@
+<% layout("/layout/boilerplate") %>
+<%- include("includes/navbar.ejs") %>
+
+<link rel="stylesheet" href="/index.css">
+
+<body class="home">
+
+    
+    <!-- Listings Section -->
+    <div class="container main-container" id="listing-section">
+
+        <div class="section-heading">
+            <h2>Popular Hotels</h2>
+            <p>Handpicked stays for your next adventure 🌍</p>
+        </div>
+
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4">
+
+            <% for(let list of listings) { %>
+
+                <div class="col">
+
+                    <a href="/lists/<%= list._id %>" class="listing-link">
+
+                        <div class="card listing-card">
+
+                            <div class="image-wrapper">
+
+                                <img 
+                                    src="<%= list.image %>" 
+                                    class="card-img-top"
+                                    alt="listing_image"
+                                >
+
+                                <div class="card-overlay">
+                                    <span>Luxury Stay</span>
+                                </div>
+
+                            </div>
+
+                            <div class="card-body">
+
+                                <div class="card-content">
+
+                                    <h4><%= list.title %></h4>
+
+                                    <p>
+                                        ₹ <%= list.price.toLocaleString("en-IN") %> 
+                                        <span>/ night</span>
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+            <% } %>
+
+        </div>
+
+        <!-- About Section -->
+
+        <div class="about-section" id="about-section">
+
+            <div class="about-left">
+
+                <h2>About Airbnb</h2>
+
+                <p>
+                    Find Your Perfect Stay. WanderLust helps travelers explore
+                    unique homes, cozy apartments, and unforgettable stays
+                    around the world.
+                </p>
+
+                <p>
+                    From peaceful mountain retreats to vibrant city apartments,
+                    WanderLust offers experiences that go beyond ordinary hotels.
+                    We focus on simplicity, trust, and convenience.
+                </p>
+
+            </div>
+
+            <div class="about-right">
+
+                <div class="feature-card">
+                    <i class="fa-solid fa-hotel"></i>
+                    <h4>Premium Stays</h4>
+                    <p>Luxury rooms & amazing experiences.</p>
+                </div>
+
+                <div class="feature-card">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <h4>Verified Hosts</h4>
+                    <p>Trusted stays with verified owners.</p>
+                </div>
+
+                <div class="feature-card">
+                    <i class="fa-solid fa-headset"></i>
+                    <h4>24/7 Support</h4>
+                    <p>Always ready to help travelers.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+<%- include("includes/footer.ejs") %>
