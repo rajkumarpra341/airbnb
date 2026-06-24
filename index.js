@@ -161,7 +161,7 @@ app.get("/lists", async (req, res) => {
 
 app.get("/", (req , res) => 
 {
-    res.send("root is working") ; 
+    res.redirect("/lists");
 }) ; 
 
 app.listen(8080 , ()=> 
