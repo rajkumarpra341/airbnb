@@ -1,170 +1,165 @@
-const express = require("express") ; 
-const app = express() ; 
-const mongoose = require("mongoose") ;
-const path = require("path") ; 
- const Listing = require("./module/listing.js") ;
-const methodOverride = require("method-override") ; 
-const ejsMate = require("ejs-mate") ; 
+require("dotenv").config();
+const dns = require("dns")
+const express = require("express");
+const app = express();
+const mongoose = require("mongoose");
+const path = require("path");
+const methodOverride = require("method-override");
+const ejsMate = require("ejs-mate");
 
+const Listing = require("./module/listing.js");
 
-app.set("view engine" , "ejs" ) ; 
-app.set("views" , path.join(__dirname , "views")) ; 
-app.engine("ejs" , ejsMate) ; 
-app.use(express.static (path.join(__dirname , "public"))) ; 
-app.use(express.urlencoded({extended : true })) ; 
-app.use(methodOverride("__method")) ; 
+// PORT (Render/Railway compatible)
+const port = process.env.PORT || 4000;
 
+// ====== MIDDLEWARE ======
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+app.engine("ejs", ejsMate);
 
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
 
-// insert data 
+dns.setServers([
+    '1.1.1.1',
+    '8.8.8.8'
+])
 
-// let list1 = new Listing(
-//     {
-//         title :"RK_hotal" , 
-//         discription : "This is the one of the best hotal in the word! ", 
-//         image : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTQWBTQpDs1HVkYY5K6En_xOlbL_zwvVjXUg&s" , 
-//         price : 18000,
-//         location : "Indore" ,
-//         country : "India", 
-//     }
-// ); 
-
-// list1.save().then((res) => 
-// {
-//     console.log(res) ; 
-// });
-
-
-
-
-// connection to db 
-main().then( () => 
-{
-    console.log("connection successfully") ; 
-}).catch((err) => console.log(err) ) ; 
-
-async function main()
-{
-    await mongoose.connect("mongodb://127.0.0.1:27017/airbnb_db");
-}
-    
-
-// // index router 
-
-app.get("/lists" , async(req , res) => 
-{
-    let listings = await Listing.find() ; 
-    console.log(listings) ; 
-    res.render("index.ejs" , {listings}) ; 
-}) ; 
-
-// // create new router 
-
-app.get("/lists/new" , (req , res) => 
-{
-    res.render("new.ejs") ; 
-}) ; 
-
-// // add new user's data 
-
-app.post("/lists" , (req , res) => 
-{
-     let {title , discription , image , price , location , country } = req.body ; 
-     let newList = new Listing({
-        title : title, 
-        image: image, 
-        discription : discription , 
-        price : price , 
-        location : location , 
-        country : country , 
-        
-     });
-
-     newList.save()
-     .then((res) => 
-    {
-        console.log("Listt was saved") ; 
-    }).catch((err) =>
-    {
-        console.log(err);
-    });
-
-    res.redirect("/lists") ; 
-});
-
-// // Edit router 
-
-app.get("/lists/:id/edit" , async(req , res) =>
-{
-    let{id} = req.params ; 
-    let listing = await Listing.findById(id) ; 
-    res.render("edit.ejs" , {listing}) ; 
-});
-// // update route 
-
-app.put("/lists/:id" , async(req , res) => 
-{
-    let{id} = req.params ; 
-    let{title : newtitle , discription : newdiscription , 
-        image : newimage , price : newprice , location : newlocation , country : newcountry
-    } = req.body; 
-    let updatedList = await Listing.findByIdAndUpdate(id,
-        {
-            title: newtitle,
-            discription: newdiscription,
-            image: newimage,
-            price: newprice,
-            location: newlocation,
-            country: newcountry
-        },
-        {runValidation : true , new : true } 
-    ) ;
-    console.log(updatedList) ; 
-    res.redirect("/lists");
-})
- 
-
-// // Delete router 
-app.delete("/lists/:id" , async(req , res) => 
-{
-    let{id} = req.params ; 
-    let deletedList = await Listing.findByIdAndDelete(id) ; 
-    console.log(deletedList) ; 
-    res.redirect("/lists");
-});
-
-
-// Show Route (Specific Details)
-app.get("/lists/:id", async (req, res) => {
-    let { id } = req.params;
-    let listing = await Listing.findById(id);
-    res.render("details.ejs", { listing }); // यहाँ single 'listing' पास करें
-});
-
-
-// Index Router with Search Functionality
-app.get("/lists", async (req, res) => {
-    let { search } = req.query;
-    let listings;
-
-    if (search) {
-        // यह Title के आधार पर डेटाबेस में सर्च करेगा (case-insensitive)
-        listings = await Listing.find({ title: { $regex: search, $options: "i" } });
-    } else {
-        listings = await Listing.find();
+// ====== MONGODB CONNECTION ======
+async function main() {
+    try {
+        await mongoose.connect(process.env.MONGODB_URL);
+        console.log(process.env.MONGODB_URL)
+        console.log("MongoDB Connected Successfully");
+    } catch (err) {
+        console.log("MongoDB Connection Error:", err);
     }
-    
-    res.render("index.ejs", { listings });
+}
+
+main();
+
+// ====== ROUTES ======
+
+// Root → redirect to lists
+app.get("/", (req, res) => {
+    res.redirect("/lists");
 });
 
+// INDEX + SEARCH ROUTE
+app.get("/lists", async (req, res, next) => {
+    try {
+        let { search } = req.query;
+        let listings;
 
+        if (search) {
+            listings = await Listing.find({
+                title: { $regex: search, $options: "i" }
+            });
+        } else {
+            listings = await Listing.find();
+        }
 
-app.get("/", (req , res) => 
-{
-    res.send("root is working") ; 
-}) ; 
+        res.render("index.ejs", { listings });
+    } catch (err) {
+        next(err);
+    }
+});
 
-app.listen(8080 , ()=> 
-{
-    console.log("server is working on the port is 8080") ; 
-})
+// NEW ROUTE
+app.get("/lists/new", (req, res) => {
+    res.render("new.ejs");
+});
+
+// CREATE ROUTE
+app.post("/lists", async (req, res, next) => {
+    try {
+        let { title, discription, image, price, location, country } = req.body;
+
+        let newList = new Listing({
+            title,
+            discription,
+            image,
+            price,
+            location,
+            country,
+        });
+
+        await newList.save();
+        res.redirect("/lists");
+    } catch (err) {
+        next(err);
+    }
+});
+
+// SHOW ROUTE
+app.get("/lists/:id", async (req, res, next) => {
+    try {
+        let { id } = req.params;
+        let listing = await Listing.findById(id);
+        res.render("details.ejs", { listing });
+    } catch (err) {
+        next(err);
+    }
+});
+
+// EDIT ROUTE
+app.get("/lists/:id/edit", async (req, res, next) => {
+    try {
+        let { id } = req.params;
+        let listing = await Listing.findById(id);
+        res.render("edit.ejs", { listing });
+    } catch (err) {
+        next(err);
+    }
+});
+
+// UPDATE ROUTE
+app.put("/lists/:id", async (req, res, next) => {
+    try {
+        let { id } = req.params;
+        let {
+            title,
+            discription,
+            image,
+            price,
+            location,
+            country
+        } = req.body;
+
+        await Listing.findByIdAndUpdate(id, {
+            title,
+            discription,
+            image,
+            price,
+            location,
+            country
+        });
+
+        res.redirect("/lists");
+    } catch (err) {
+        next(err);
+    }
+});
+
+// DELETE ROUTE
+app.delete("/lists/:id", async (req, res, next) => {
+    try {
+        let { id } = req.params;
+        await Listing.findByIdAndDelete(id);
+        res.redirect("/lists");
+    } catch (err) {
+        next(err);
+    }
+});
+
+// ====== ERROR HANDLING ======
+app.use((err, req, res, next) => {
+    console.error("ERROR:", err);
+    res.status(500).send("Internal Server Error: " + err.message);
+});
+
+// ====== START SERVER ======
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+});
