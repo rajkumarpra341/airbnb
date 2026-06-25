@@ -52,114 +52,24 @@ app.get("/lists", async (req, res, next) => {
         let { search } = req.query;
         let listings;
 
-        if (search) {
-            listings = await Listing.find({
-                title: { $regex: search, $options: "i" }
-            });
-        } else {
-            listings = await Listing.find();
-        }
-
-        res.render("index.ejs", { listings });
-    } catch (err) {
-        next(err);
+    if (search) {
+        // यह Title के आधार पर डेटाबेस में सर्च करेगा (case-insensitive)
+        listings = await Listing.find({ title: { $regex: search, $options: "i" } });
+    } else {
+        listings = await Listing.find();
     }
+    
+    res.render("index.ejs", { listings });
 });
 
-// NEW ROUTE
-app.get("/lists/new", (req, res) => {
-    res.render("new.ejs");
-});
 
-// CREATE ROUTE
-app.post("/lists", async (req, res, next) => {
-    try {
-        let { title, discription, image, price, location, country } = req.body;
 
-        let newList = new Listing({
-            title,
-            discription,
-            image,
-            price,
-            location,
-            country,
-        });
+app.get("/", (req , res) => 
+{
+    res.send("root is working") ; 
+}) ; 
 
-        await newList.save();
-        res.redirect("/lists");
-    } catch (err) {
-        next(err);
-    }
-});
-
-// SHOW ROUTE
-app.get("/lists/:id", async (req, res, next) => {
-    try {
-        let { id } = req.params;
-        let listing = await Listing.findById(id);
-        res.render("details.ejs", { listing });
-    } catch (err) {
-        next(err);
-    }
-});
-
-// EDIT ROUTE
-app.get("/lists/:id/edit", async (req, res, next) => {
-    try {
-        let { id } = req.params;
-        let listing = await Listing.findById(id);
-        res.render("edit.ejs", { listing });
-    } catch (err) {
-        next(err);
-    }
-});
-
-// UPDATE ROUTE
-app.put("/lists/:id", async (req, res, next) => {
-    try {
-        let { id } = req.params;
-        let {
-            title,
-            discription,
-            image,
-            price,
-            location,
-            country
-        } = req.body;
-
-        await Listing.findByIdAndUpdate(id, {
-            title,
-            discription,
-            image,
-            price,
-            location,
-            country
-        });
-
-        res.redirect("/lists");
-    } catch (err) {
-        next(err);
-    }
-});
-
-// DELETE ROUTE
-app.delete("/lists/:id", async (req, res, next) => {
-    try {
-        let { id } = req.params;
-        await Listing.findByIdAndDelete(id);
-        res.redirect("/lists");
-    } catch (err) {
-        next(err);
-    }
-});
-
-// ====== ERROR HANDLING ======
-app.use((err, req, res, next) => {
-    console.error("ERROR:", err);
-    res.status(500).send("Internal Server Error: " + err.message);
-});
-
-// ====== START SERVER ======
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-});
+app.listen(8080 , ()=> 
+{
+    console.log("server is working on the port is 8080") ; 
+})
